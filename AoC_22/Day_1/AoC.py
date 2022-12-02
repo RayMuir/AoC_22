@@ -12,11 +12,8 @@ for x in data_into_list:
     else:
         l.append(sum_digit)
         if sum_digit > final:
-            #print(final)
             final = sum_digit 
         sum_digit = 0
 l.sort(reverse=True)
 print(l)
 print(sum(l[0:3]))
-
-#total = sum(map(int, filter(str.isdigit, string.split())))
