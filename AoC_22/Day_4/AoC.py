@@ -1,4 +1,3 @@
-import re
 text = open("Day_4/input.txt", "r").read().split('\n')
 y = []
 for x in text:
