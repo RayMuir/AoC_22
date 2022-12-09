@@ -16,9 +16,16 @@ for x in text:
             i = i + 4
     else: 
         foo = re.findall('\d+', x )
-        for index in range(int(foo[0])):            
-            arr[int(foo[2])-1].appendleft(arr[int(foo[1])-1].popleft())
+        temp = deque([])
+        for index in range(int(foo[0])):           
+            
+            temp.appendleft(arr[int(foo[1])-1].popleft())
+        for index in range(int(foo[0])):  
+            arr[int(foo[2])-1].appendleft(temp.popleft())    
+            
 
 for y in arr:
     print(y.popleft(), end="")
            
+            
+
