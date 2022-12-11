@@ -6,26 +6,37 @@ class Dir:
     name : str
     children : list[Dir]
     files : list[str]
+    size : int
 
-    def __init__(self, parent=None, name= "", children=[], files = []):
+    def __init__(self, parent=None, name= "", children=[], files = [], size = 0):
         self.parent = parent
         self.name = name
         self.children = children
         self.files = files
-ret = []
-def sum_up(node : Dir, size = 0, depth = 0):
-    for n in node.children:
-        sum_up(n, size, depth + 1)
-    size = 0 
-    for file in node.files:
-        size = int(file[0]) + size
-    if int(size) <= 100000: 
-        ret.append(size)
+        self.size = size
+
+def sum_dir(node):
+    node.size = sum(int(file[0]) for file in node.files)
+    if len(node.children) != 0:
+        for c in node.children:
+            node.size =  node.size + sum_dir(c)   
+    return node.size
+
+global total
+total = 0
+
+def sum_up(node : Dir):
+    if node.size <= 100000:
+        global total
+        total += node.size
+    if len(node.children) != 0:
+        for c in node.children:
+            sum_up(c)
 
 def main():
     root = Dir(None, "/", [], [])
     current_node = root
-    text = open("Day_7/input2.txt", "r").read().split('\n')
+    text = open("Day_7/input.txt", "r").read().split('\n')
     for x in text:
         x = x.split()
         match x[0]:
@@ -51,13 +62,10 @@ def main():
             case _:
                 if (x[0], x[1]) not in current_node.files:
                     current_node.files.append((x[0],x[1]))
+    sum_dir(root)
     sum_up(root)
-    print(sum(ret))
+    print(root.size)
+    print(total)
 
-
-        
-
-        
-    
 if __name__ == "__main__":
     main()
