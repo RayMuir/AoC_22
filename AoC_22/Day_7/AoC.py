@@ -32,6 +32,24 @@ def sum_up(node : Dir):
     if len(node.children) != 0:
         for c in node.children:
             sum_up(c)
+sizes = []
+def get_all_sizes(node : Dir):
+    if node.name != "/":
+        sizes.append((node.size, node.name))
+    if len(node.children) != 0:
+        for c in node.children:
+            get_all_sizes(c)
+delete = []
+def part2(root_size):
+    disk = 70000000 - 30000000
+    for x in sizes:
+        if (root_size - x[0]) <= disk:
+            delete.append(x[0])
+    delete.sort()
+    return delete[0]
+    
+
+
 
 def main():
     root = Dir(None, "/", [], [])
@@ -64,7 +82,9 @@ def main():
                     current_node.files.append((x[0],x[1]))
     sum_dir(root)
     sum_up(root)
+    get_all_sizes(root)
     print(total)
+    print(part2(root.size))
 
 if __name__ == "__main__":
     main()
