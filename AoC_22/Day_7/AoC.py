@@ -64,7 +64,6 @@ def main():
                     current_node.files.append((x[0],x[1]))
     sum_dir(root)
     sum_up(root)
-    print(root.size)
     print(total)
 
 if __name__ == "__main__":
